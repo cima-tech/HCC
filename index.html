@@ -22,18 +22,17 @@
 
     * { box-sizing: border-box; }
 
+/* [SEC-003] BODY / BASE */
 body {
   font-family: Arial, sans-serif;
   font-size: 12px;
   margin: 0;
   padding: 16px;
-  /*alternar entre los dos */
-  /* background: radial-gradient(circle at top, #2f6fb8, #0c1b2e); */ 
-  background: #f5f7fb;  /* fondo clarito */
-}
+  background: #f5f7fb;           /* 👈 FONDO GRIS PARA DIME (APP) */
   color: var(--color-texto);
-}
-  /* [SEC-003] BODY / BASE */
+  min-height: 100vh;
+} 
+ /* [SEC-003] BODY / BASE */
 /*body {
   font-family: Arial, sans-serif;
   font-size: 12px;
@@ -46,68 +45,76 @@ body {
   color: var(--color-texto);
 } */
     
-    /* [SEC-010] LOGIN / LOCK SCREEN */
+/* [SEC-010] LOGIN / LOCK SCREEN */
 .lock-screen {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at top, #2f6fb8, #0c1b2e);
+  background: radial-gradient(circle at top, #2f6fb8, #0c1b2e); /* 👈 FONDO AZUL BANCARIO SOLO PARA LOGIN */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
 }
-    .lock-card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 18px 20px 16px 20px;
-      width: 90%;
-      max-width: 360px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      text-align: center;
-    }
-    .lock-card h2 {
-      margin: 0 0 4px 0;
-      font-size: 18px;
-      color: var(--color-base);
-    }
-    .lock-subtitle {
-      font-size: 11px;
-      color: #555;
-      margin-bottom: 14px;
-    }
-    .lock-input {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 16px;          /* >=16px para que iOS no haga zoom automático */
-      border-radius: 8px;
-      border: 1px solid #ccd3e2;
-      margin-bottom: 10px;
-    }
-    .lock-input:focus {
-      outline: none;
-      border-color: var(--color-base);
-      box-shadow: 0 0 0 1px rgba(28,78,128,0.18);
-    }
-    .lock-btn {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 13px;
-      border-radius: 8px;
-      border: 1px solid var(--color-base);
-      background: var(--color-base);
-      color: #fff;
-      cursor: pointer;
-    }
-    .lock-btn:hover {
-      background: #163d62;
-    }
-    .lock-error {
-      font-size: 11px;
-      color: #e74c3c;
-      min-height: 14px;
-      margin-top: 6px;
-    }
 
+.lock-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 20px 16px 20px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.lock-card h2 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: var(--color-base);
+}
+
+.lock-subtitle {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+.lock-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 16px;          /* >=16px para que iOS no haga zoom automático */
+  border-radius: 8px;
+  border: 1px solid #ccd3e2;
+  margin-bottom: 10px;
+}
+
+.lock-input:focus {
+  outline: none;
+  border-color: var(--color-base);
+  box-shadow: 0 0 0 1px rgba(28,78,128,0.18);
+}
+
+.lock-btn {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--color-base);
+  background: var(--color-base);
+  color: #fff;
+  cursor: pointer;
+}
+
+.lock-btn:hover {
+  background: #163d62;
+}
+
+.lock-error {
+  font-size: 11px;
+  color: #e74c3c;
+  min-height: 14px;
+  margin-top: 6px;
+}
+    
     /* [SEC-020] LAYOUT GENERAL APP */
     #app {
       display: none; /* se muestra al pasar el login */
@@ -638,7 +645,7 @@ body {
   <!-- [SEC-101] LOGIN / PANTALLA DE ACCESO -->
   <div id="lock-screen" class="lock-screen">
     <div class="lock-card">
-      <h2>D.I.M.E. - HCC</h2>
+      <h2>DIME</h2>
       <div class="lock-subtitle">Ingrese la contraseña.</div>
       <input
         id="pwd-input"
