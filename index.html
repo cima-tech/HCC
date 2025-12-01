@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- [SEC-001] METADATOS BÁSICOS -->
   <meta charset="UTF-8" />
   <title>HCC - Sistema de Médicos</title>
 
-  <!-- Base de datos -->
+  <!-- [SEC-002] BASE DE DATOS (JSON JS EXTERNO) -->
   <script src="HCC_data.js"></script>
 
-  <!-- ===== ESTILOS ===== -->
+  <!-- [SEC-003] ESTILOS GLOBALES Y LAYOUT -->
   <style>
     :root {
       --color-base: #1c4e80;
@@ -29,7 +30,7 @@
       color: var(--color-texto);
     }
 
-    /* ===== LOGIN / LOCK SCREEN ===== */
+    /* [SEC-010] LOGIN / LOCK SCREEN */
     .lock-screen {
       position: fixed;
       inset: 0;
@@ -91,7 +92,7 @@
       margin-top: 6px;
     }
 
-    /* ===== LAYOUT GENERAL APP ===== */
+    /* [SEC-020] LAYOUT GENERAL APP */
     #app {
       display: none; /* se muestra al pasar el login */
     }
@@ -113,7 +114,8 @@
     .main-header-logo img {
       height: 40px;
       width: auto;
-      filter: brightness(0) invert(0.2); /* logo blanco -> gris oscuro */
+      /* si tu SVG ya viene oscuro, puedes quitar este filter */
+      filter: brightness(0) invert(0.2);
     }
 
     .main-header-titles h1 {
@@ -286,7 +288,7 @@
       margin: 0 auto;
     }
 
-    /* Tablas no seleccionables */
+    /* [SEC-030] TABLAS PRINCIPALES (NO SELECCIONABLES, RESPONSIVE, ANCHO MÁXIMO) */
     .tabla-wrapper,
     .tabla-hcc,
     .tabla-hcc * {
@@ -306,7 +308,7 @@
       box-shadow: var(--shadow-soft);
       min-width: 600px;
       font-size: 10px;
-      table-layout: fixed;              /* para que no se expanda infinito */
+      table-layout: fixed;              /* clave para que no se expanda infinito */
       word-wrap: break-word;
       overflow-wrap: break-word;
     }
@@ -324,18 +326,35 @@
       text-align: left;
     }
 
-    .tabla-hcc tbody tr:nth-child(odd) { background: #fafbff; }
+    /* [SEC-031] COLUMNA NÚMERO SIEMPRE ANGOSTA */
+    .tabla-hcc th.col-0,
+    .tabla-hcc td.col-0 {
+      width: 32px;
+      max-width: 32px;
+      min-width: 28px;
+      text-align: center;
+      white-space: nowrap;
+    }
 
+    /* [SEC-032] APELLIDOS Y NOMBRES MÁXIMO 3 LÍNEAS (CLAMP) */
+    .tabla-hcc td.col-1,
+    .tabla-hcc td.col-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tabla-hcc tbody tr:nth-child(odd) { background: #fafbff; }
     .tabla-hcc tbody tr:hover { background: #fff5e5; }
 
     .tabla-hcc a {
       color: var(--color-base);
       text-decoration: none;
     }
-
     .tabla-hcc a:hover { text-decoration: underline; }
 
-    /* ===== MODALES TIPO “MÓVIL” ===== */
+    /* [SEC-040] MODALES TIPO “MÓVIL” */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -470,7 +489,7 @@
       color: #fff;
     }
 
-    /* MODAL DIFUSIÓN */
+    /* [SEC-050] MODAL DIFUSIÓN / LISTA GRUPO */
     .bulk-fields {
       display: grid;
       grid-template-columns: 1fr;
@@ -501,7 +520,7 @@
       margin-top: 6px;
     }
 
-    /* BOTONES */
+    /* [SEC-060] BOTONES GENERALES */
     .btn {
       padding: 6px 10px;
       font-size: 11px;
@@ -544,7 +563,7 @@
       font-size: 14px;
     }
 
-    /* RESUMEN */
+    /* [SEC-070] RESUMEN */
     .summary-panel {
       margin: 6px auto 0 auto;
       font-size: 11px;
@@ -558,13 +577,14 @@
       cursor: pointer;
     }
 
+    /* [SEC-080] RESPONSIVE */
     @media (max-width: 768px) {
       body { padding: 10px; }
       .layout-top { flex-direction: column; }
       .section-tablas { max-width: 100%; }
     }
 
-    /* ===== MODO IMPRESIÓN / PDF ===== */
+    /* [SEC-090] MODO IMPRESIÓN / PDF */
     @media print {
       .lock-screen { display: none !important; }
       .main-header,
@@ -601,7 +621,7 @@
 </head>
 <body>
 
-  <!-- ===== LOGIN ===== -->
+  <!-- [SEC-101] LOGIN / PANTALLA DE ACCESO -->
   <div id="lock-screen" class="lock-screen">
     <div class="lock-card">
       <h2>Acceso HCC</h2>
@@ -621,12 +641,13 @@
     </div>
   </div>
 
-  <!-- ===== APP COMPLETA (se muestra tras login correcto) ===== -->
+  <!-- [SEC-102] APP COMPLETA (SE VE TRAS EL LOGIN) -->
   <div id="app">
+    <!-- [SEC-110] ENCABEZADO PRINCIPAL + LOGO -->
     <header class="main-header">
       <div class="main-header-logo">
-        <!-- aquí puedes poner tu <img src="logoHCC.png"> si quieres -->
-        <img src="" alt="Logo HCC" />
+        <!-- Sube un archivo logo_hcc.svg en la misma carpeta -->
+        <img src="logo_hcc.svg" alt="Logo HCC" />
       </div>
       <div class="main-header-titles">
         <h1>HCC – Sistema de Médicos</h1>
@@ -636,12 +657,14 @@
       </div>
     </header>
 
+    <!-- [SEC-120] ACCIONES SUPERIORES (EXPORTAR) -->
     <div class="top-actions">
       <button type="button" id="btn-export-pdf" class="btn-export">Exportar a PDF</button>
     </div>
 
+    <!-- [SEC-130] FILTROS Y CONTROL DE COLUMNAS -->
     <div class="layout-top">
-      <!-- ===== FILTROS ===== -->
+      <!-- Filtros -->
       <div id="filtros" class="panel">
         <div class="panel-title">Filtros</div>
         <div class="panel-body filtros-grid">
@@ -650,12 +673,10 @@
             <input type="text" id="busqueda" placeholder="Ej: Pérez, Ana, Luis..." />
           </div>
 
-          <!-- Estatus: multi selección -->
+          <!-- Estatus multi selección -->
           <div class="filtro filtro-multi">
             <div class="filtro-title">Estatus</div>
-            <div class="filtro-chips" id="chips-estatus">
-              <!-- se llenan por JS -->
-            </div>
+            <div class="filtro-chips" id="chips-estatus"></div>
           </div>
 
           <div class="filtro">
@@ -700,23 +721,21 @@
         </div>
       </div>
 
-      <!-- ===== CONTROL DE COLUMNAS ===== -->
+      <!-- Control de columnas -->
       <div id="controles_columnas" class="panel">
         <div class="panel-title">Columnas</div>
-        <div class="panel-body" id="panel-columnas">
-          <!-- checkboxes generados por JS -->
-        </div>
+        <div class="panel-body" id="panel-columnas"></div>
       </div>
     </div>
 
-    <!-- Resumen -->
+    <!-- [SEC-140] RESUMEN DE GRUPO FILTRADO -->
     <div class="summary-panel">
       <span id="summary-text">Mostrando miembros actuales.</span>
       &nbsp;
       <a href="#" id="link-contact-group">Contactar a este grupo…</a>
     </div>
 
-    <!-- Tablas -->
+    <!-- [SEC-150] TABLAS PRINCIPALES Y ASOCIADOS -->
     <div class="section-tablas">
       <h2>Principales</h2>
       <div id="tabla-principales-container"></div>
@@ -726,7 +745,7 @@
     </div>
   </div>
 
-  <!-- ===== MODAL CONTACTO INDIVIDUAL ===== -->
+  <!-- [SEC-201] MODAL CONTACTO INDIVIDUAL -->
   <div id="modal-backdrop" class="modal-backdrop">
     <div class="modal modal-mobile">
       <div class="modal-header">
@@ -757,7 +776,7 @@
     </div>
   </div>
 
-  <!-- ===== MODAL NUEVO ACCIONISTA ===== -->
+  <!-- [SEC-202] MODAL NUEVO ACCIONISTA -->
   <div id="modal-new-backdrop" class="modal-backdrop">
     <div class="modal modal-mobile">
       <div class="modal-header">
@@ -777,7 +796,7 @@
     </div>
   </div>
 
-  <!-- ===== MODAL DIFUSIÓN GRUPO FILTRADO ===== -->
+  <!-- [SEC-203] MODAL DIFUSIÓN / GRUPO FILTRADO -->
   <div id="modal-bulk-backdrop" class="modal-backdrop">
     <div class="modal modal-wide">
       <div class="modal-header">
@@ -820,9 +839,9 @@
     </div>
   </div>
 
-  <!-- ===== LÓGICA JS ===== -->
+  <!-- [SEC-301] LÓGICA JS PRINCIPAL -->
   <script>
-    // Índices de columnas (incluyendo N° = 0)
+    // [SEC-302] CONSTANTES DE COLUMNAS Y METADATOS
     const COL_N   = 0;
     const COL_APE = 1;
     const COL_NOM = 2;
@@ -846,7 +865,7 @@
     // columnas visibles por defecto
     const DEFAULT_VISIBLE_COLS = new Set(['N°','APELLIDOS','NOMBRES','ESTATUS','ESPECIALIDAD']);
 
-    // ---------- UTILIDADES ----------
+    // [SEC-303] UTILIDADES GENERALES
     function getCellText(row, colIndex) {
       const cell = row.querySelector('.col-' + colIndex);
       return cell ? cell.textContent.trim() : '';
@@ -857,7 +876,7 @@
       if (!val) return '';
 
       if (col === COL_CEL) {
-        const digits = val.replace(/\\D/g, '');
+        const digits = val.replace(/\D/g, '');
         if (digits.length >= 10) {
           const href = 'tel:+' + digits;
           return '<a href="' + href + '">' + val + '</a>';
@@ -880,7 +899,7 @@
       return vals;
     }
 
-    // ---------- CONTROLES DE COLUMNAS ----------
+    // [SEC-304] CONTROLES DE COLUMNAS (CHECKBOX)
     function buildColumnControls() {
       const panel = document.getElementById('panel-columnas');
       panel.innerHTML = '';
@@ -926,7 +945,7 @@
       });
     }
 
-    // ---------- TABLAS ----------
+    // [SEC-305] CONSTRUCCIÓN DE TABLAS (PRINCIPALES / ASOCIADOS)
     function buildTable(tableId, containerId, tipoAcc) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -999,7 +1018,7 @@
       buildTable('tabla_asociados',  'tabla-asociados-container',  'ASOCIADO');
     }
 
-    // ---------- FILTROS ----------
+    // [SEC-306] OPCIONES DE FILTROS (COMBOS / CHIPS)
     function fillSimpleSelect(id, values) {
       const sel = document.getElementById(id);
       sel.innerHTML = '<option value="">Todos</option>';
@@ -1026,7 +1045,6 @@
         if (rec['TIPO ACC']) tipoSet.add(rec['TIPO ACC'].trim());
       });
 
-      // chips de estatus
       const chips = document.getElementById('chips-estatus');
       chips.innerHTML = '';
       Array.from(estatusSet).sort().forEach(val => {
@@ -1046,6 +1064,7 @@
       fillSimpleSelect('filtro-tipoacc', Array.from(tipoSet).sort());
     }
 
+    // [SEC-307] APLICAR FILTROS SOBRE TODAS LAS TABLAS
     function applyFilters() {
       const searchValue = document.getElementById('busqueda').value.trim().toLowerCase();
       const estatusSelected = getSelectedValues('.flt-estatus');
@@ -1128,7 +1147,7 @@
       });
     }
 
-    // ---------- ORDEN Y NUMERACIÓN ----------
+    // [SEC-308] ORDEN Y NUMERACIÓN DINÁMICA
     function renumerarTabla(tableId) {
       const tbl = document.getElementById(tableId);
       if (!tbl) return;
@@ -1185,7 +1204,7 @@
       sortTableByApellidoEstatus('tabla_asociados');
     }
 
-    // ---------- MODAL CONTACTO ----------
+    // [SEC-309] MODAL DE CONTACTO (VER / EDITAR / BORRAR)
     function openModalForRow(row, tableId) {
       modalRow = row;
       modalTableId = tableId;
@@ -1216,7 +1235,7 @@
       const pers = getCellText(row, COL_PERS);
 
       if (tel) {
-        const digits = tel.replace(/\\D/g, '');
+        const digits = tel.replace(/\D/g, '');
         if (digits.length >= 10) {
           const href = 'tel:+' + digits;
           const a = document.createElement('a');
@@ -1300,7 +1319,7 @@
       closeModal();
     }
 
-    // ---------- MODAL NUEVO ACCIONISTA ----------
+    // [SEC-310] MODAL “NUEVO ACCIONISTA”
     function openNewAccionistaModal() {
       if (!newRecordTableId) return;
 
@@ -1358,7 +1377,7 @@
       closeNewAccionistaModal();
     }
 
-    // ---------- MODAL DIFUSIÓN ----------
+    // [SEC-311] MODAL DIFUSIÓN / COPIAR LISTAS
     function collectVisibleContacts() {
       const principalTbl = document.getElementById('tabla_principales');
       const asociadoTbl  = document.getElementById('tabla_asociados');
@@ -1448,7 +1467,7 @@
       });
     }
 
-    // ---------- RESUMEN ----------
+    // [SEC-312] RESUMEN (CONTADORES Y TOTAL ACCIONISTAS)
     function updateSummary() {
       const principalTbl = document.getElementById('tabla_principales');
       const asociadoTbl  = document.getElementById('tabla_asociados');
@@ -1487,7 +1506,7 @@
       summaryEl.textContent = txt;
     }
 
-    // ---------- EVENTOS DE TABLAS / EXPORTAR ----------
+    // [SEC-313] EVENTOS DE TABLAS Y EXPORTAR PDF
     function setupRowEditing() {
       ['tabla_principales', 'tabla_asociados'].forEach(id => {
         const tbl = document.getElementById(id);
@@ -1521,7 +1540,7 @@
       });
     }
 
-    // ---------- INICIALIZACIÓN DE LA APP (tras login) ----------
+    // [SEC-314] INICIALIZACIÓN COMPLETA TRAS LOGIN
     function initApp() {
       buildColumnControls();
       buildFilterOptionsFromData();
@@ -1538,7 +1557,7 @@
       applyFilters(); // renumera + resumen
     }
 
-    // ---------- LOGIN ----------
+    // [SEC-315] LOGIN Y DESBLOQUEO (PASSWORD: ojodetigre)
     document.addEventListener('DOMContentLoaded', function() {
       const lock = document.getElementById('lock-screen');
       const app  = document.getElementById('app');
