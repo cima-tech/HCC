@@ -112,10 +112,10 @@
     }
 
     .main-header-logo img {
+      /* aquí va tu PNG: logo_hcc.png */
       height: 40px;
       width: auto;
-      /* si tu SVG ya viene oscuro, puedes quitar este filter */
-      filter: brightness(0) invert(0.2);
+      object-fit: contain;
     }
 
     .main-header-titles h1 {
@@ -336,14 +336,7 @@
       white-space: nowrap;
     }
 
-    /* [SEC-032] APELLIDOS Y NOMBRES MÁXIMO 3 LÍNEAS (CLAMP) */
-    .tabla-hcc td.col-1,
-    .tabla-hcc td.col-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
+    /*  >>> OJO: eliminamos el clamp de 3 líneas en col-1 y col-2 para evitar el problema visual <<< */
 
     .tabla-hcc tbody tr:nth-child(odd) { background: #fafbff; }
     .tabla-hcc tbody tr:hover { background: #fff5e5; }
@@ -646,8 +639,8 @@
     <!-- [SEC-110] ENCABEZADO PRINCIPAL + LOGO -->
     <header class="main-header">
       <div class="main-header-logo">
-        <!-- Sube un archivo logo_hcc.svg en la misma carpeta -->
-        <img src="logo_hcc.svg" alt="Logo HCC" />
+        <!-- Coloca en la misma carpeta un archivo llamado logo_hcc.png -->
+        <img src="logo_hcc.png" alt="Logo HCC" />
       </div>
       <div class="main-header-titles">
         <h1>HCC – Sistema de Médicos</h1>
